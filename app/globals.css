@@ -1,26 +1,100 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* --- 1. Mendaftarkan Colors ke Tailwind Engine --- */
+  --color-background: #fdfaf5;
+  --color-on-background: #1b1c1c;
+  
+  --color-surface: #f7f3ee;
+  --color-surface-low: #f0ece6;
+  --color-surface-variant: rgba(215, 204, 191, 0.3);
+  
+  --color-primary: #c27d38;
+  --color-primary-container: #ffdaba;
+  
+  --color-secondary: #5e636e;
+  --color-tertiary-container: #ffffff;
+
+  /* --- 2. Mendaftarkan Typography --- */
+  --font-display: "Plus Jakarta Sans", sans-serif;
+  --font-body: "Be Vietnam Pro", sans-serif;
+
+  /* --- 3. Mendaftarkan Elevation (Shadows) --- */
+  --shadow-lifted: 0 4px 12px rgba(27, 28, 28, 0.04), 0 2px 4px rgba(27, 28, 28, 0.02);
+  --shadow-active-sink: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  @keyframes fall {
+    0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* Definisi Utilitas Animasi */
+  --animate-fall: fall 15s linear infinite;
+  
+  /* Definisi Gradien Teks Kustom (Ochre to Slate) */
+  --background-image-text-gradient: linear-gradient(135deg, #c27d38 30%, #5e636e 90%);
+
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  body {
+    /* Sekarang bisa pakai utility class langsung di @apply */
+    @apply bg-background text-on-background font-body antialiased;
+    background-image: radial-gradient(var(--color-surface-low) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  h1, h2, .display-stats {
+    @apply font-display font-extrabold tracking-tighter;
+  }
+
+  .label-archival {
+    @apply font-display text-[10px] uppercase font-bold tracking-[0.2em];
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* --- 4. Component Tokens (Lebih Bersih) --- */
+
+  .well-container {
+    @apply bg-surface-low rounded-[2.5rem] p-6;
+  }
+
+  .tile-card {
+    @apply bg-tertiary-container rounded-xl flex items-center justify-center;
+    @apply transition-all duration-200 ease-in-out select-none cursor-pointer;
+    @apply shadow-lifted aspect-square;
+  }
+
+  .tile-card:active {
+    @apply translate-y-[1px] shadow-active-sink bg-surface;
+  }
+
+  .tile-empty {
+    @apply bg-surface-variant rounded-xl border-2 border-dashed border-on-background/10;
+  }
+
+  .floating-dock {
+    @apply fixed bottom-0 left-0 right-0 h-24 rounded-t-[2rem];
+    /* Di v4, opacity bisa langsung pakai slash / jika warna sudah terdaftar */
+    @apply bg-surface/80 backdrop-blur-md;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.03);
+  }
+
+  .action-icon {
+    @apply w-12 h-12 rounded-full flex items-center justify-center transition-colors;
+    @apply hover:bg-primary/20;
+  }
+
+  .btn-restart {
+    @apply bg-primary-container text-primary px-8 py-3 rounded-full;
+    @apply transition-transform active:scale-95 font-display font-bold uppercase tracking-wider text-[10px];
+  }
+}
+@layer utilities {
+  /* Utilitas untuk Text Gradient */
+  .text-gradient {
+    @apply bg-text-gradient bg-clip-text text-transparent;
+  }
 }
