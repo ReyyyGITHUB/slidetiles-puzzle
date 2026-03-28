@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { BarChart2, Settings, ArrowLeft, RefreshCcw, Lightbulb } from "lucide-react";
 import Link from "next/link";
 import WinPopup from "../components/WinPopup";
@@ -12,6 +12,7 @@ export default function FullscreenGame() {
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [isWon, setIsWon] = useState(false);
+  const slideAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const initGame = useCallback(() => {
     const solved = [1, 2, 3, 4, 5, 6, 7, 8, 0];
@@ -64,6 +65,10 @@ export default function FullscreenGame() {
   };
 
   useEffect(() => { initGame(); }, [initGame]);
+  useEffect(() => {
+    slideAudioRef.current = new Audio("/audio/slide.mp3");
+    slideAudioRef.current.volume = 0.5;
+  }, []);
 
   useEffect(() => {
     let interval: any = null;
