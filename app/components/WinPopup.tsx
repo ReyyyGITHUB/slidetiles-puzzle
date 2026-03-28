@@ -12,7 +12,7 @@ interface WinPopupProps {
 export default function WinPopup({ moves, time, onRestart }: WinPopupProps) {
   const handleShareScore = () => {
     const myNumber = '6285799799857'
-    const websiteUrl = 'https://example.com'
+    const websiteUrl = 'https://slidetiles.vercel.app'
     const message = `Sliding Tiles: Puzzle Solved!
 
 Dalam sekejap, tantangan ini runtuh tanpa perlawanan. Setiap langkah terasa nyaris tak terlihat, setiap detik berlalu tanpa cela.
