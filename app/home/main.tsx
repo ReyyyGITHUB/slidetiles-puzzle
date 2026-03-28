@@ -77,7 +77,7 @@ export default function MainPage() {
               Sliding Tiles
             </h1>
             <p className="label-archival text-on-background/40 mt-4 text-xs md:text-sm">
-              Kiran Only &lt;3
+              Kiran calon maba ugm, ub, undip only &lt;3
             </p>
           </div>
 
