@@ -5,16 +5,15 @@ import {
   Play,
   BarChart2,
   Settings,
-  Calendar,
-  History,
-  Trophy,
   Lock,
   Puzzle,
 } from "lucide-react";
 import Link from "next/link";
+import FeatureUnavailablePopup from "../components/FeatureUnavailablePopup";
 
 export default function MainPage() {
   const [isMounted, setIsMounted] = useState(false);
+  const [showUnavailable, setShowUnavailable] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -115,69 +114,63 @@ export default function MainPage() {
         {/* 3. Cards Section - Responsive Grid (1 col on mobile, 3 on desktop) */}
         <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-7xl mx-auto mt-16 md:mt-auto z-10">
           {/* Daily Puzzle Card */}
-          <div className="well-container flex flex-col gap-4 !rounded-[2rem] bg-surface/60 hover:bg-surface/90 transition-colors cursor-pointer group">
+          <button
+            onClick={() => setShowUnavailable(true)}
+            className="well-container flex flex-col gap-4 !rounded-[2rem] bg-surface/60 opacity-60 cursor-not-allowed text-left"
+            aria-disabled="true"
+          >
             <div className="flex justify-between items-center">
               <span className="label-archival">Daily Puzzle</span>
-              <Calendar
-                size={14}
-                className="opacity-40 group-hover:opacity-100 transition-opacity"
-              />
-            </div>
-            <div className="aspect-[16/9] bg-surface-low rounded-xl overflow-hidden grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all">
-              {/* Placeholder for image */}
-              <div className="w-full h-full flex items-center justify-center text-on-background/10 bg-on-background/5">
-                <Puzzle size={32} strokeWidth={1} />
-              </div>
-            </div>
-            <div>
-              <h3 className="font-display font-bold text-on-background">
-                Garden Pathway
-              </h3>
-              <p className="body-text text-xs mt-1">
-                3 x 3 • Easy •{" "}
-                <span className="text-primary font-medium">New</span>
-              </p>
-            </div>
-          </div>
-
-          {/* Continue Card */}
-          <div className="well-container flex flex-col gap-4 !rounded-[2rem] bg-surface/60 hover:bg-surface/90 transition-colors cursor-pointer group">
-            <div className="flex justify-between items-center">
-              <span className="label-archival">Continue</span>
-              <History
-                size={14}
-                className="opacity-40 group-hover:opacity-100 transition-opacity"
-              />
-            </div>
-            <div className="aspect-[16/9] bg-surface-low rounded-xl flex flex-col items-center justify-center relative overflow-hidden">
-              <span className="text-4xl md:text-5xl font-display font-extrabold text-on-background/10 z-10">
-                85%
-              </span>
-              {/* Subtle progress fill */}
-              <div
-                className="absolute inset-y-0 left-0 bg-primary/5 z-0"
-                style={{ width: "85%" }}
-              />
-            </div>
-            <div>
-              <h3 className="font-display font-bold text-on-background">
-                The Grand Marble
-              </h3>
-              <p className="body-text text-xs mt-1">
-                5 x 5 • Expert •{" "}
-                <span className="text-secondary font-medium">In Progress</span>
-              </p>
-            </div>
-          </div>
-
-          {/* Challenges Card - Empty/Locked State */}
-          <div className="well-container flex flex-col gap-4 !rounded-[2rem] bg-surface-low/50 opacity-60">
-            <div className="flex justify-between items-center">
-              <span className="label-archival">Challenges</span>
-              <Trophy size={14} className="opacity-40" />
+              <Lock size={14} className="opacity-40" />
             </div>
             <div className="aspect-[16/9] bg-surface/40 rounded-xl flex items-center justify-center text-on-background/20 border-2 border-dashed border-on-background/10">
               <Lock size={32} strokeWidth={1.5} />
+            </div>
+            <div>
+              <h3 className="font-display font-bold text-on-background">
+                Belum Tersedia
+              </h3>
+              <p className="body-text text-xs mt-1">
+                Fitur ini belum tersedia.
+              </p>
+            </div>
+          </button>
+
+          {/* Continue Card */}
+          <button
+            onClick={() => setShowUnavailable(true)}
+            className="well-container flex flex-col gap-4 !rounded-[2rem] bg-surface/60 opacity-60 cursor-not-allowed text-left"
+            aria-disabled="true"
+          >
+            <div className="flex justify-between items-center">
+              <span className="label-archival">Continue</span>
+              <Lock size={14} className="opacity-40" />
+            </div>
+            <div className="aspect-[16/9] bg-surface/40 rounded-xl flex items-center justify-center text-on-background/20 border-2 border-dashed border-on-background/10">
+              <Lock size={32} strokeWidth={1.5} />
+            </div>
+            <div>
+              <h3 className="font-display font-bold text-on-background">
+                Belum Tersedia
+              </h3>
+              <p className="body-text text-xs mt-1">
+                Fitur ini belum tersedia.
+              </p>
+            </div>
+          </button>
+
+          {/* Challenges Card - Empty/Locked State */}
+          <button
+            onClick={() => setShowUnavailable(true)}
+            className="well-container flex flex-col gap-4 !rounded-[2rem] bg-surface-low/50 opacity-60 cursor-not-allowed text-left"
+            aria-disabled="true"
+          >
+            <div className="flex justify-between items-center">
+              <span className="label-archival">Challenges</span>
+              <Lock size={14} className="opacity-40" />
+            </div>
+            <div className="aspect-[16/9] bg-surface/40 rounded-xl flex items-center justify-center text-on-background/20 border-2 border-dashed border-on-background/10">
+               <Lock size={32} strokeWidth={1.5} />
             </div>
             <div>
               <h3 className="font-display font-bold text-on-background">
@@ -185,9 +178,13 @@ export default function MainPage() {
               </h3>
               <p className="body-text text-xs mt-1">Unlock at Level 5</p>
             </div>
-          </div>
+          </button>
         </section>
       </main>
+      <FeatureUnavailablePopup
+        open={showUnavailable}
+        onClose={() => setShowUnavailable(false)}
+      />
     </div>
   );
 }
